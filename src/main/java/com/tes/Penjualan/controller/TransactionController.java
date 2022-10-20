@@ -2,6 +2,7 @@ package com.tes.Penjualan.controller;
 
 import com.tes.Penjualan.dto.report.ReportDTO;
 import com.tes.Penjualan.dto.transaction.TransactionDTO;
+import com.tes.Penjualan.service.TransDetailService;
 import com.tes.Penjualan.service.TransService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,9 @@ public class TransactionController {
 
     @Autowired
     private TransService transService;
+
+    @Autowired
+    private TransDetailService transDetailService;
 
     // -- GET MY RESERVATION
     @GetMapping("/my-cart")
@@ -66,12 +70,12 @@ public class TransactionController {
     public String list(@RequestParam(defaultValue = "1")Integer page,
                        Model model){
 
-        List<ReportDTO> grid = transactionDetailService.getAll(page);
+        List<ReportDTO> grid = transDetailService.getAll(page);
         for(ReportDTO value: grid){
             System.out.println("report dto: "+value);
         }
 
-        long totalPages = transactionDetailService.getTotalPages();
+        long totalPages = transDetailService.getTotalPages();
 
         model.addAttribute("breadCrumbs","Report");
         model.addAttribute("report",grid);
